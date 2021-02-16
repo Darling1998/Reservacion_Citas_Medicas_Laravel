@@ -1,19 +1,19 @@
 <span class="docs-normal">Gestionar Datos</span>
 <ul class="navbar-nav">
 <li class="nav-item">
-    <a class="nav-link active" href="examples/dashboard.html">
+    <a class="nav-link active" href="/home">
     <i class="ni ni-tv-2 text-primary"></i>
     <span class="nav-link-text">Dashboard</span>
     </a>
 </li>
 <li class="nav-item">
-    <a class="nav-link" href="examples/icons.html">
+    <a class="nav-link" href="/especialidades">
     <i class="ni ni-paper-diploma text-orange"></i>
     <span class="nav-link-text">Especialidades</span>
     </a>
 </li>
 <li class="nav-item">
-    <a class="nav-link" href="examples/map.html">
+    <a class="nav-link" href="/medicos">
     <i class="ni ni-badge text-primary"></i>
     <span class="nav-link-text">Medicos</span>
     </a>
