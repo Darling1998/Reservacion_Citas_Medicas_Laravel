@@ -29,11 +29,11 @@
                 @csrf
                 <div class="form-group">
                     <label for="name">Nombre de la especialidad</label>
-                    <input type="text" name="nombre" class="form-control" required value="{{ old('nombre')}}"></input>
+                    <input type="text" name="nombre" class="form-control" required value="{{ old('nombre')}}">
                 </div>
                 <div class="form-group">
                     <label for="descripcion">Descripcion</label>
-                    <input type="text" name="descripcion" class="form-control" value="{{ old('descripcion')}}"></input>
+                    <input type="text" name="descripcion" class="form-control" value="{{ old('descripcion')}}">
                 </div>
                 <button type="submit" class="btn btn-success">Guardar</button>
             </form>  

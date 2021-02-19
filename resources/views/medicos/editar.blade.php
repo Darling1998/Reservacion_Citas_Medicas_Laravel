@@ -34,7 +34,7 @@
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="name">Nombre</label>
-                        <input type="text"  class="form-control" name="nombre" required value="{{ old('nombre',$medico->name)}}"  >
+                        <input type="text"  class="form-control" name="name" required value="{{ old('name',$medico->name)}}"  >
                       </div>
                     </div>
                     <div class="col-lg-6">
@@ -53,8 +53,9 @@
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group">
-                        <label class="form-control-label" for="last-name">Contraseña</label>
-                        <input type="password" name="password"  class="form-control" required  value="{{ old('password',$medico->password)}}">
+                        <label class="form-control-label" for="last-name">Contraseña </label>
+                        <input type="password" name="password"  class="form-control" >
+                        <p>Modifica este campo si quieres cambiar la contraseña</p>
                       </div>
                     </div>
                   </div>
@@ -79,15 +80,6 @@
                       </div>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label class="form-control-label" for="direccion">Dirección</label>
-                        <input name="direccion" class="form-control"  type="text" value="{{ old('telefono',$medico->telefono)}}">
-                      </div>
-                    </div>
-                  </div>
-
                 </div>
                 <hr class="my-4">
                 <button type="submit" class="btn btn-success">Guardar</button>
