@@ -14,8 +14,26 @@
                 </div>
             </div>
         </div>
-        
-      <div class="table-responsive">
+        <div class="card-body">
+            @if(session('notificacion'))
+                <div class="alert alert-success" role="alert">
+                    {{session('notificacion')}}
+                </div> 
+            @endif
+        </div>
+
+        <div class="card-body">
+            @if(session('alertas'))
+                <div class="alert alert-danger" role="alert">
+                    <ul>
+                        @foreach (session('alertas') as $alert)
+                        <li>{{$alert}}</li>
+                        @endforeach
+                    </ul>
+                </div> 
+            @endif
+        </div>
+        <div class="table-responsive">
             <!-- Projects table -->
             <table class="table align-items-center">
                 <thead class="thead-light">
@@ -23,17 +41,19 @@
                         <th scope="col">Día</th>
                         <th scope="col">Activo</th>
                         <th scope="col">Turno mañana</th>
-                        <th scope="col">Turno tarde[]</th>
+                        <th scope="col">Turno tarde</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    @foreach($dias as $aux=> $dia)
+                    @foreach($dias_trabajo as $aux=> $dia_tra)
                     <tr>
-                        <th> {{$dia}}</th>
+                        <th> {{$dias[$aux]}}</th>
                         <td>
                             <label class="custom-toggle">
-                                <input type="checkbox" name="activo[]" value="{{$aux}}">
+                                <input type="checkbox" name="activo[]" value="{{$aux}}"
+                                @if($dia_tra->activo) checked @endif
+                                >
                                 <span class="custom-toggle-slider rounded-circle"></span>
                             </label>
                         </td>
@@ -42,16 +62,24 @@
                                 <div class="col">
                                     <select class="form-control" name="hora_inicio_mñn[]">
                                         @for($i=6;$i<=11;$i++)
-                                        <option value="{{$i}}:00">{{$i}}:00 am</option>
-                                        <option value="{{$i}}:30">{{$i}}:30 am</option>
+                                        <option value="{{($i<10 ? '0':'').$i}}:00" @if($i.':00 AM' ==$dia_tra->hora_inicio_mñn) selected @endif>
+                                            {{$i}}:00 AM
+                                        </option>
+                                        <option value="{{($i<10 ? '0':'').$i}}:30" @if($i.':30 AM' ==$dia_tra->hora_inicio_mñn) selected @endif>
+                                            {{$i}}:30 AM
+                                        </option>
                                         @endfor
                                     </select>
                                 </div>
                                 <div class="col">
                                     <select class="form-control" name="hora_fin_mñn[]">
                                         @for($i=6;$i<=11;$i++)
-                                        <option value="{{$i}}:00">{{$i}}:00 am</option>
-                                        <option value="{{$i}}:30">{{$i}}:30 am</option>
+                                        <option value="{{($i<10 ? '0':'').$i}}:00" @if($i.':00 AM' ==$dia_tra->hora_fin_mñn) selected @endif>
+                                            {{$i}}:00 AM
+                                        </option>
+                                        <option value="{{($i<10 ? '0':'').$i}}:30" @if($i.':30 AM' ==$dia_tra->hora_fin_mñn) selected @endif>
+                                            {{$i}}:30 AM
+                                        </option>
                                         @endfor
                                     </select>
                                 </div>
@@ -63,16 +91,24 @@
                                 <div class="col">
                                     <select class="form-control" name="hora_inicio_tarde[]">
                                         @for($i=1;$i<=8;$i++)
-                                        <option value="{{$i+12}}:00">{{$i+12}}:00 pm</option>
-                                        <option value="{{$i+12}}:30">{{$i+12}}:30 pm</option>
+                                        <option value="{{$i+12}}:00" @if($i.':00 PM' ==$dia_tra->hora_inicio_tarde) selected @endif>
+                                            {{$i+12}}:00 PM
+                                        </option>
+                                        <option value="{{$i+12}}:30" @if($i.':30 PM' ==$dia_tra->hora_inicio_tarde) @endif>
+                                            {{$i+12}}:30 PM
+                                        </option>
                                         @endfor
                                     </select>
                                 </div>
                                 <div class="col">
                                     <select class="form-control" name="hora_fin_tarde[]">
                                         @for($i=1;$i<=8;$i++)
-                                        <option value="{{$i+12}}:00">{{$i+12}}:00 pm</option>
-                                        <option value="{{$i+12}}:30">{{$i+12}}:30 pm</option>
+                                        <option value="{{$i+12}}:00" @if($i.':00 PM' ==$dia_tra->hora_fin_tarde) selected @endif>
+                                            {{$i+12}}:00 PM
+                                        </option>
+                                        <option value="{{$i+12}}:30" @if($i.':30 PM' ==$dia_tra->hora_fin_tarde) selected @endif>
+                                            {{$i+12}}:30 PM
+                                        </option>
                                         @endfor
                                     </select>
                                 </div>

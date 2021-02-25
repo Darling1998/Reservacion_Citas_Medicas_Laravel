@@ -30,13 +30,14 @@ Route::middleware(['auth','admin'])->group(function () {
     Route::put('/especialidades/{especialidad}',[App\Http\Controllers\Admin\EspecialidadController::class, 'actualizar']); //actualiza una especialidad
     Route::delete('/especialidades/{especialidad}',[App\Http\Controllers\Admin\EspecialidadController::class, 'eliminar']); //elimina una especialidad
 
-    //Rutas para Médicos
+   // Route::resource('medicos','Admin\MedicoController');
     Route::get('/medicos',[App\Http\Controllers\Admin\MedicoController::class, 'index']);
-    Route::get('/medicos/crear',[App\Http\Controllers\Admin\MedicoController::class, 'crear']); //muestra el formulario de registro
-    Route::get('/medicos/{medico}/editar',[App\Http\Controllers\Admin\MedicoController::class, 'editar']);//nos dirige a la vista de editar
-    Route::post('/medicos',[App\Http\Controllers\Admin\MedicoController::class, 'guardar']); //envia el fromulario de registro
-    Route::put('/medicos/{medico}',[App\Http\Controllers\Admin\MedicoController::class, 'actualizar']); //actualiza un medico
-    Route::delete('/medicos/{medico}',[App\Http\Controllers\Admin\MedicoController::class, 'eliminar']); //elimina un medico
+    Route::get('/medicos/create',[App\Http\Controllers\Admin\MedicoController::class, 'create']); //muestra el formulario de registro
+    Route::get('/medicos/{medico}/edit',[App\Http\Controllers\Admin\MedicoController::class, 'edit']);//nos dirige a la vista de editar
+    Route::post('/medicos',[App\Http\Controllers\Admin\MedicoController::class, 'store']); //envia el fromulario de registro
+    Route::put('/medicos/{medico}',[App\Http\Controllers\Admin\MedicoController::class, 'update']); //actualiza un medico
+    Route::delete('/medicos/{medico}',[App\Http\Controllers\Admin\MedicoController::class, 'destroy']); //elimina un medico
+   
 });
 
 
@@ -45,3 +46,8 @@ Route::middleware(['auth','medico'])->group(function () {
     Route::get('/horario',[App\Http\Controllers\Medico\HorarioController::class, 'editar']);
     Route::post('/horario',[App\Http\Controllers\Medico\HorarioController::class, 'guardar']);
 });
+
+
+//JSON PARA LA API medicos asociados a una especialidad
+Route::get('/especialidades/{especialidad}/medicos',[App\Http\Controllers\Api\EspecialidadController::class, 'medicos']);
+Route::get('/horarios/horas',[App\Http\Controllers\Api\HorarioController::class, 'horas']);

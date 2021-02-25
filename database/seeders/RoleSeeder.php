@@ -23,7 +23,7 @@ class RoleSeeder extends Seeder
         $rol_1->save();
 
         $rol_2 = new Role();
-        $rol_2->nombre='recepcionista';
+        $rol_2->nombre='paciente';
         $rol_2->save();
     }
 }

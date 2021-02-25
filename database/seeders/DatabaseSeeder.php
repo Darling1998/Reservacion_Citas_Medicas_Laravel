@@ -25,6 +25,17 @@ class DatabaseSeeder extends Seeder
             'telefono'=>'0986653745',
             'role_id'=>'1',
         ]);
+        User::create([
+            'name' => 'Norma',
+            'email' => 'norma123@hotmail.com',
+            'password' => bcrypt('norma123'),
+            'apellido'=>'Erazo',
+            'cedula'=>'0986321547',
+            'direccion'=>'Guayas',
+            'telefono'=>'0923366535',
+            'role_id'=>'2',
+        ]);
         $this->call(RoleSeeder::class);
+        $this->call(EspecialidadesTableSeeder::class);
     }
 }

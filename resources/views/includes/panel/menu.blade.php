@@ -7,12 +7,12 @@
 </span>
 <ul class="navbar-nav">
     @if(auth()->user()->role_id==1)
-    <li class="nav-item">
+{{--     <li class="nav-item">
         <a class="nav-link active" href="/home">
         <i class="ni ni-tv-2 text-primary"></i>
         <span class="nav-link-text">Dashboard</span>
         </a>
-    </li>
+    </li> --}}
     <li class="nav-item">
         <a class="nav-link" href="/especialidades">
         <i class="ni ni-paper-diploma text-orange"></i>
@@ -31,12 +31,12 @@
         <span class="nav-link-text">Pacientes</span>
         </a>
     </li>
-    <li class="nav-item">
+{{--     <li class="nav-item">
         <a class="nav-link" href="examples/tables.html">
         <i class="ni ni-bullet-list-67 text-default"></i>
         <span class="nav-link-text">Administrador</span>
         </a>
-    </li>
+    </li> --}}
     <li class="nav-item">
         <a class="nav-link" href="" onclick="event.preventDefault(); document.getElementById('formLogout').
         submit();">

@@ -8,7 +8,7 @@
                     <h3 class="mb-0">Médicos</h3>
                 </div>
                 <div class="col text-right">
-                    <a href="{{url('medicos/crear')}}" class="btn btn-sm btn-primary">Agregar médico</a>
+                    <a href="{{url('medicos/create')}}" class="btn btn-sm btn-primary">Agregar médico</a>
                 </div>
             </div>
         </div>
@@ -46,7 +46,7 @@
                             <form action="{{url('/medicos/'.$medico->id)}}" method="POST">
                                 @csrf
                                 @method('DELETE')                            
-                                <a href="{{url('/medicos/'.$medico->id.'/editar')}}" class="btn btn-sm btn-success">Editar</a>
+                                <a href="{{url('/medicos/'.$medico->id.'/edit')}}" class="btn btn-sm btn-success">Editar</a>
                             <button href="" class="btn btn-sm btn-danger" type="submit">Eliminar</button>
                             </form>
                         </td>

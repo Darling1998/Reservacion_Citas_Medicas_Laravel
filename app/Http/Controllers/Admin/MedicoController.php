@@ -7,26 +7,41 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\User;
+use App\Models\Especialidad;
 
 class MedicoController extends Controller
 {
-    
-    public function index(){
-         $medicos = User::where('role_id','2')->get(); 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $medicos = User::medicos()->get(); 
         return view('medicos.index',compact('medicos'));
     }
 
-    public function crear(){
-        return view('medicos.crear');
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $especialidades = Especialidad::all();
+        return view('medicos.create',compact('especialidades'));
     }
 
-    public function editar(User $medico){
-        
-        return view('medicos.editar',compact('medico'));
-    }
-
-    public function guardar(Request $request){
-      //  dd($request->all());        
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+       // dd($request->all());        
 
         //validaciones
          $reglas=[
@@ -39,33 +54,60 @@ class MedicoController extends Controller
         ];
 
          $this->validate($request,$reglas);
-
+ 
          //asignacion masiva
-        /* User::create(
+        $user=  User::create(
             $request->only('name','apellido','cedula','telefono','email')
             +[
                 'role_id'=>$request->input('role_id'),
                 'password'=>bcrypt($request->input('contra'))
             ]
-        );  */
-
-        $medico = new User();
-        $medico->name= $request->input('name');
-        $medico->email= $request->input('email');
-        $medico->cedula= $request->input('cedula');
-        $medico->apellido= $request->input('apellido');
-        $medico->telefono= $request->input('telefono');
-        $medico->direccion = $request->input('direccion');
-        $medico->password= bcrypt($request->input('contra'));
-        $medico->role_id=$request->input('role_id');
-        $medico->save();
-        $alerta = 'Medico agregado con éxito';
-        return redirect('/medicos')->with(compact('alerta'));
+        );  
+        
+        $user->especialidades()->attach($request->input('especialidades'));
+        $notification = 'El médico se ha registrado correctamente.';
+        return redirect('/medicos')->with(compact('notification'));
     }
-    /* DnIO7Vcc */
 
-    public function actualizar(Request $request,User $medico){
-        //validaciones
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+
+     //***EDITAR */
+    public function edit($id)
+    {
+        $medico = User::medicos()->findOrFail($id);
+        $especialidades = Especialidad::all();
+
+        //traer especialidades desde el servidor
+       $id_especialidades = $medico->especialidades()->pluck('especialidads.id');
+       
+        return view('medicos.edit',compact('medico','especialidades','id_especialidades'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request,$id)
+     {
         $reglas=[
             'name'=>'required|min:3',
             'apellido'=>'required|min:3',
@@ -78,23 +120,35 @@ class MedicoController extends Controller
 
 
         $this->validate($request,$reglas);
+
+        $user=User::medicos()->findOrFail($id);
+
         $data = $request->only('name','apellido','cedula','telefono','email');
       
-        $medico->name = $request->input('name');
-        $medico->apellido = $request->input('apellido');
-        $medico->cedula = $request->input('cedula');
-        $medico->telefono = $request->input('telefono');
-        $medico->email = $request->input('email');
-        $medico->password = bcrypt($request->input('password'));
-        $medico->save();
-            return redirect('/medicos');
+        $password = $request->input('password');
+        if ($password)
+            $data['password'] = bcrypt($password);
 
-       $alerta = 'Datos del médico actualizados con éxito';
-        return redirect('/medicos')->with(compact('alerta'));
+        $user->fill($data);
+        $user->save(); // UPDATE
+
+        //accedemos a las especialidades del usuario sync para sincronizar las especialidades del value actual
+        $user->especialidades()->sync($request->input('especialidades'));
+
+        $notification = 'La información del médico se ha actualizado correctamente.';
+        return redirect('/medicos')->with(compact('notification'));
     }
 
-    public function eliminar(User $medico){
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(User $medico)
+    {
         $medico->delete();
+
         return redirect('/medicos');
-    } 
+    }
 }
