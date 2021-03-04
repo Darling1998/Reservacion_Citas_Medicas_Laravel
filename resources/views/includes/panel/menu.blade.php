@@ -31,6 +31,12 @@
         <span class="nav-link-text">Pacientes</span>
         </a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/citas">
+        <i class="ni ni-calendar-grid-58 text-orange"></i>
+        <span class="nav-link-text">Todas las Citas</span>
+        </a>
+    </li>
 {{--     <li class="nav-item">
         <a class="nav-link" href="examples/tables.html">
         <i class="ni ni-bullet-list-67 text-default"></i>
@@ -57,13 +63,7 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="examples/profile.html">
-        <i class="ni ni-single-02 text-green"></i>
-        <span class="nav-link-text">Mis Pacientes</span>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="examples/profile.html">
+        <a class="nav-link" href="/citas">
         <i class="ni ni-calendar-grid-58 text-orange"></i>
         <span class="nav-link-text">Mis Citas</span>
         </a>

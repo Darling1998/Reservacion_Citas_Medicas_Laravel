@@ -47,7 +47,23 @@ Route::middleware(['auth','medico'])->group(function () {
     Route::post('/horario',[App\Http\Controllers\Medico\HorarioController::class, 'guardar']);
 });
 
+Route::post('/citas',[App\Http\Controllers\CitaController::class, 'store']);//guardar cita
+
+Route::middleware('auth')->group(function () {
+   
+    Route::get('/citas',[App\Http\Controllers\CitaController::class, 'index']);
+    Route::get('/citas/{cita}',[App\Http\Controllers\CitaController::class, 'mostrarDetalle']); //mostrar informacion de una cita especifica
+    //Route::post('/citas',[App\Http\Controllers\CitaController::class, 'store']);//guardar cita
+
+    Route::get('/citas/{cita}/cancelar',[App\Http\Controllers\CitaController::class, 'mostrarFormCancelar']); //muestra el formulario de cancelar el textarea pra la notificacion
+	Route::post('/citas/{cita}/cancelar' ,[App\Http\Controllers\CitaController::class, 'cancel']);//cancela la cita medica
+
+	 Route::post('/citas/{cita}/confirmar', [App\Http\Controllers\CitaController::class, 'postConfirmar']); 
+
+});
+Route::get('/horarios/horas',[App\Http\Controllers\Api\HorarioController::class, 'horas']);
 
 //JSON PARA LA API medicos asociados a una especialidad
-Route::get('/especialidades/{especialidad}/medicos',[App\Http\Controllers\Api\EspecialidadController::class, 'medicos']);
+/* Route::get('/especialidades/{especialidad}/medicos',[App\Http\Controllers\Api\EspecialidadController::class, 'medicos']);
 Route::get('/horarios/horas',[App\Http\Controllers\Api\HorarioController::class, 'horas']);
+Route::get('/especialidades',[App\Http\Controllers\Api\EspecialidadController::class, 'index']); 

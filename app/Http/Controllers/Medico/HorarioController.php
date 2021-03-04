@@ -51,7 +51,7 @@ class HorarioController extends Controller
 
       for($i=0;$i<7;++$i){
 
-         if($hora_inicio_mñn[$i]>$hora_fin_mñn[$i]){
+         if($hora_inicio_mñn[$i]>=$hora_fin_mñn[$i]){
             $alertas[]='Las horas del turno de la mañana contienen inconsistencias en el dia '.$this->dias[$i].'.';
          }
          if($hora_inicio_tarde[$i]>$hora_fin_tarde[$i]){

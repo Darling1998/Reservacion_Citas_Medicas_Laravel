@@ -35,5 +35,17 @@ class UserFactory extends Factory
             'role_id'=>rand(1,3),
         ];
     }
-    /* sxfmSv51 */
+
+
+    public function paciente(){
+        return $this->state([
+            'role_id'=>'3',
+        ]);
+    }
+    
+    public function medicop(){
+        return $this->state([
+            'role_id'=>2,
+        ]);
+    }
 }

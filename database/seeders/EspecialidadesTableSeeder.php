@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Seeders;
+use App\Models\User;
 
 use App\Models\Especialidad;
 use Illuminate\Database\Seeder;
@@ -21,9 +22,15 @@ class EspecialidadesTableSeeder extends Seeder
         ];
 
         foreach($especialidades as $item){
-            Especialidad::create([
+           
+           $especialidad= Especialidad::create([
                 'nombre'=>$item
             ]);
+
+            
+            $especialidad->usuarios()->saveMany(
+                User::factory(3)->medicop()->make()
+            );
         }
 
     }

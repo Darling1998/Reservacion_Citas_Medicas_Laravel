@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         \App\Models\User::factory(10)->create();
+        
 
         User::create([
             'name' => 'Darling',
@@ -35,6 +35,8 @@ class DatabaseSeeder extends Seeder
             'telefono'=>'0923366535',
             'role_id'=>'2',
         ]);
+
+        \App\Models\User::factory(10)->create();
         $this->call(RoleSeeder::class);
         $this->call(EspecialidadesTableSeeder::class);
     }

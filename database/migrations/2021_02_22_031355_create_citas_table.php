@@ -15,16 +15,13 @@ class CreateCitasTable extends Migration
     {
         Schema::create('citas', function (Blueprint $table) {
             $table->id();
-            $table->string('descripcion');
+            $table->string('descripcion')->nullable();
            
+            //fecha y hora de cita programada
             $table->date('fecha_cita');
             $table->time('hora_cita');
 
-            
-            $table->string('tipo');
-            $table->timestamps();
-
-            //medico
+             //medico
             $table->unsignedBigInteger('medico_id');
             $table->foreign('medico_id')->references('id')->on('users');
 
@@ -32,8 +29,15 @@ class CreateCitasTable extends Migration
             $table->unsignedBigInteger('paciente_id');
             $table->foreign('paciente_id')->references('id')->on('users');
          
+
             $table->unsignedBigInteger('especialidad_id');
             $table->foreign('especialidad_id')->references('id')->on('especialidads');
+
+            //Reservada,cancelada,confirmada,atendida,cancelada
+            $table->string('estado')->default('Reservada');
+
+            $table->string('tipo');
+            $table->timestamps();
 
         });
     }
