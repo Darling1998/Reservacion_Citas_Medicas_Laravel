@@ -22,7 +22,7 @@ class CreateEspecialidadUserTable extends Migration
 
             //especialidad
             $table->unsignedBigInteger('especialidad_id');
-            $table->foreign('especialidad_id')->references('id')->on('especialidads');
+            $table->foreign('especialidad_id')->references('id')->on('especialidads')->onDelete('cascade');
 
 
             $table->timestamps();

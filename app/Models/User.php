@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-
+use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Especialidad;
-class User extends Authenticatable
+use App\Models\Cita;
+class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
 
@@ -35,6 +36,11 @@ class User extends Authenticatable
         'password',
         'remember_token',
         'pivot',
+        'created_at',
+        'updated_at',
+        'rol_id',
+        'email_verified_at',
+
     ];
 
     /**
@@ -56,4 +62,45 @@ class User extends Authenticatable
     {
         return $query->where('role_id', '2');
     }
+
+    public function scopePacientes($query)
+    {
+        return $query->where('role_id', '3');
+    }
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+    /**
+    * Return a key value array, containing any custom claims to be 
+    * added to the JWT.
+    * @return array
+    */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
+
+    //citas atendidas filtro
+    public function citasAtendidas(){
+        return $this->citasPorDoctor()->where('estado','Atendida');
+    }
+
+    //citas canceladas filtro
+    public function citasCanceladas()
+    {
+        return $this->citasPorDoctor()->where('estado','Cancelada');
+    }
+
+    //las citas de un usuario medico
+    public function citasPorDoctor(){
+        return $this->hasMany(Cita::class,'medico_id');
+    }
+
+
+    //citas de un usuario paciente
+
+
 }

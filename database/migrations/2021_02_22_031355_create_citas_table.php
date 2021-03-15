@@ -31,7 +31,7 @@ class CreateCitasTable extends Migration
          
 
             $table->unsignedBigInteger('especialidad_id');
-            $table->foreign('especialidad_id')->references('id')->on('especialidads');
+            $table->foreign('especialidad_id')->references('id')->on('especialidads')->onDelete('cascade');
 
             //Reservada,cancelada,confirmada,atendida,cancelada
             $table->string('estado')->default('Reservada');

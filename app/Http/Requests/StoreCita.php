@@ -35,7 +35,8 @@ class StoreCita extends FormRequest
             'descripcion'=>'required',
             'especialidad_id'=>'exists:especialidads,id',
             'medico_id'=>'exists:users,id',
-            'hora_cita'=>'required'
+            'hora_cita'=>'required',
+            'paciente_id'=>'exists:users,id'
         ];
     }
 
@@ -60,7 +61,7 @@ class StoreCita extends FormRequest
             
 
             if(!$this->horario_service->disponibilidadIntervalo($fecha,$medico_id,$inicio)){
-                $validator->errors()->add('Hora disponible','la hora seleccionida ya está reservada');
+                $validator->errors()->add('Hora No Disponible','la hora seleccionida ya está reservada');
             }
         });
     }

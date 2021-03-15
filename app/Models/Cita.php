@@ -58,10 +58,11 @@ class Cita extends Model
             'medico_id',
             'fecha_cita',
             'hora_cita',
-            'tipo',
             'paciente_id',
+            'tipo',
         ]);
     
+            //$data['patient_id'] = $medicoId;
             /* $data['paciente_id']= $paciente_id; */
             //cambiar el formato  
             $hora_carbon=Carbon::createFromFormat('g:i A',$data['hora_cita']);

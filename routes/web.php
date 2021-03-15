@@ -37,7 +37,18 @@ Route::middleware(['auth','admin'])->group(function () {
     Route::post('/medicos',[App\Http\Controllers\Admin\MedicoController::class, 'store']); //envia el fromulario de registro
     Route::put('/medicos/{medico}',[App\Http\Controllers\Admin\MedicoController::class, 'update']); //actualiza un medico
     Route::delete('/medicos/{medico}',[App\Http\Controllers\Admin\MedicoController::class, 'destroy']); //elimina un medico
+
+    //paciente
+    Route::get('/pacientes',[App\Http\Controllers\Admin\PacienteController::class, 'index']);
    
+
+    //reportes
+    Route::get('/reportes/citas/lineas',[App\Http\Controllers\Admin\ReporteController::class, 'citas']);
+    //vista de medicos
+    Route::get('/reportes/medicos/barras',[App\Http\Controllers\Admin\ReporteController::class, 'medicos']);
+    //data de medicos en json 
+    Route::get('/reportes/medicos/barras/infor',[App\Http\Controllers\Admin\ReporteController::class, 'medicosJson']);
+
 });
 
 
@@ -64,6 +75,6 @@ Route::middleware('auth')->group(function () {
 Route::get('/horarios/horas',[App\Http\Controllers\Api\HorarioController::class, 'horas']);
 
 //JSON PARA LA API medicos asociados a una especialidad
-/* Route::get('/especialidades/{especialidad}/medicos',[App\Http\Controllers\Api\EspecialidadController::class, 'medicos']);
+ /* Route::get('/especialidades/{especialidad}/medicos',[App\Http\Controllers\Api\EspecialidadController::class, 'medicos']);
 Route::get('/horarios/horas',[App\Http\Controllers\Api\HorarioController::class, 'horas']);
-Route::get('/especialidades',[App\Http\Controllers\Api\EspecialidadController::class, 'index']); 
+Route::get('/especialidades',[App\Http\Controllers\Api\EspecialidadController::class, 'index']);  */

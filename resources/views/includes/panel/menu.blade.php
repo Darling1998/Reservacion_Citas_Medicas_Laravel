@@ -26,7 +26,7 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="examples/profile.html">
+        <a class="nav-link" href="/pacientes">
         <i class="ni ni-single-02 text-yellow"></i>
         <span class="nav-link-text">Pacientes</span>
         </a>
@@ -92,13 +92,13 @@
 <!-- Navigation -->
 <ul class="navbar-nav mb-md-3">
     <li class="nav-item">
-        <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html" target="_blank">
+        <a class="nav-link" href="{{ url ('/reportes/citas/lineas')}}" >
         <i class="ni ni-watch-time text-green"></i>
         <span class="nav-link-text">Frecuencia de Citas</span>
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/foundation/colors.html" target="_blank">
+        <a class="nav-link" href="{{ url ('/reportes/medicos/barras')}}">
         <i class="ni ni-collection text-danger"></i>
         <span class="nav-link-text">Médicos más solicitados</span>
         </a>
