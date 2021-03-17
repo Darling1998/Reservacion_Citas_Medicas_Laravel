@@ -2,20 +2,19 @@
 
 @section('content')
     <div class="card">
-        <div class="card-header border-0">
+        
             <div class="row align-items-center">
                 <div class="col">
                     <h3 class="mb-0">Reporte Frecuencia de Citas</h3>
                 </div>
             </div>
-        </div>
 
         <div class="card-body">
             <div id="container">
 
             </div>
         </div>
-
+    
     </div>
 
 @endsection

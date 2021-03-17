@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+  return  redirect('/login');
 });
 
 Auth::routes();
@@ -49,6 +49,11 @@ Route::middleware(['auth','admin'])->group(function () {
     //data de medicos en json 
     Route::get('/reportes/medicos/barras/infor',[App\Http\Controllers\Admin\ReporteController::class, 'medicosJson']);
 
+
+    //vista especialidades
+    Route::get('/reportes/especialidades/barras',[App\Http\Controllers\Admin\ReporteController::class, 'especialidadesDemandadas']);
+    //data de especialidades en json
+    Route::get('/reportes/especialidades/barras/infor',[App\Http\Controllers\Admin\ReporteController::class, 'especialidadesDemandadasJson']);
 });
 
 

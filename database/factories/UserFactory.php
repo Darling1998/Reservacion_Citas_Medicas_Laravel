@@ -29,7 +29,7 @@ class UserFactory extends Factory
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
             'apellido'=>$this->faker->lastName,
-            'cedula'=>Str::random(10),
+            'cedula'=>$this->faker->randomNumber(8, true),
             'direccion'=>$this->faker->address,
             'telefono'=>$this->faker->e164PhoneNumber,
             'role_id'=>rand(1,3),

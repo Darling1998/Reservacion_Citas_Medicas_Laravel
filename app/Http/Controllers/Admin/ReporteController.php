@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cita;
+use App\Models\Especialidad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 
 class ReporteController extends Controller
 {
@@ -70,5 +72,44 @@ class ReporteController extends Controller
         $series[] = $series2;
         $data['series']=$series;
         return $data;
+    }
+
+
+    public function especialidadesDemandadas(){
+        return view('reportes.especialidades');
+    }
+
+    public function especialidadesDemandadasJson(Request $request){
+        $inicio=$request->input('inicio');
+        $fin=$request->input('fin');;
+   
+        //$esp=DB::table('especialidads')->select('id','nombre')->withCount('citas')->orderBy('citas_count','desc')->take(4)->get();
+         //$esp = Especialidad::withCount('citas')->orderBy('citas_count','desc')->get('citas_count')->take(3)->toArray();
+
+        $esp=Especialidad::select(['id', 'nombre'])->withCount(['citas'=>function($quer) use ($inicio,$fin){
+
+           // $users = DB::table('citas')->whereBetween('fecha_cita',[$inicio,$fin]);
+        }]
+        )->orderBy('citas_count','desc')->get()->take(4)->toArray();
+
+       // $esp=Especialidad::select('id', 'nombre')->withCount('citas')->orderBy('citas_count','desc')->take(4)->get()->toArray();
+        //dd($esp);
+
+        $data =[];
+        $data['categorias']=collect($esp)->pluck('nombre');
+
+        $series=[];
+        //citas atendidas
+        $series1['name']='Total Citas Atendidas por Especialidad';
+        $series1['data'] = collect($esp)->pluck('citas_count');
+        //citas canceladas
+    
+        $series2['name'] = collect($esp)->pluck('nombre');
+
+        $series[] = $series1;
+        $series[] = $series2;
+        $data['series']=$series;
+        return $data; //{categories:[],series:[]}
+
     }
 }

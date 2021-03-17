@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -13,34 +14,9 @@ use JWTAuth;
 class AuthController extends Controller
 {
 
-
-/*     public function login(Request $request)
-    {
-        $input = $request->only('email', 'password');
-        $jwt_token = null;
-
-         if (!$jwt_token = JWTAuth::attempt($input)) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Email o contraseñas incorrectos',
-            ], Response::HTTP_UNAUTHORIZED);
-        }
-        $user = JWTAuth::guard('api')->user();
-        $success = true;
-        $data=compact('user','jwt_token');
-        return compact('success','data');
-
-    } */
-
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->middleware('auth:api', ['except' => ['login', 'registro']]);
     }
-
-    /**
-     * Get a JWT via given credentials.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
 
       public function login(Request $request){
     	$validator = Validator::make($request->all(), [
@@ -60,6 +36,36 @@ class AuthController extends Controller
         return $this->createNewToken($token);
     }
   
+
+    public function registro(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|between:2,100',
+            'email' => 'required|string|email|max:100|unique:users',
+            'password' => 'required|string|min:8',
+            'apellido'=>'required|min:3',
+            'cedula'=>'nullable|digits:10|unique:users',
+            'telefono'=>'nullable|min:7',
+            'direccion'=>'nullable|string'
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+
+        $user = User::create(array_merge(
+                    $validator->validated(),
+                    ['password' => bcrypt($request->password),'role_id'=>'3']
+                ));
+
+        return response()->json([
+            'message' => 'success',
+            'toast'=>'Registro Exitoso',
+            'user' => $user
+        ], 201);
+    }
+
+
+
    protected function createNewToken($token){
         return response()->json([
             'access_token' => $token,
@@ -70,21 +76,5 @@ class AuthController extends Controller
     }  
 
 
-/*    public function login(Request $request)
-    {
-        $input = $request->only('email', 'password');
-        $jwt_token = null;
 
-        if (!$jwt_token = JWTAuth::attempt($input)) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Invalid Email or Password',
-            ], Response::HTTP_UNAUTHORIZED);
-        }
-
-        return response()->json([
-            'success' => true,
-            'token' => $jwt_token,
-        ]);
-    }  */
 }

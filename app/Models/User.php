@@ -102,5 +102,8 @@ class User extends Authenticatable implements JWTSubject
 
     //citas de un usuario paciente
 
+    public function citascomoPaciente(){
+        return $this->hasMany(Cita::class,'paciente_id');
+    }
 
 }

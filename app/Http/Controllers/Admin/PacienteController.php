@@ -9,7 +9,7 @@ use App\Models\User;
 class PacienteController extends Controller
 {
     public function index(){
-        $pacientes = User::pacientes()->get(); 
+        $pacientes = User::pacientes()->paginate(10); 
         return view('pacientes.index',compact('pacientes'));
     }
 }

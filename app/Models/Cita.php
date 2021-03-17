@@ -23,6 +23,11 @@ class Cita extends Model
         'tipo'
     ];
 
+    protected $hidden=['medico_id','hora_cita'];
+    protected $appends = [
+        'hora_cita_time_12'
+    ];
+
 
     //acceder desde una cita a la especialidad asociada
     public function especialidad(){
@@ -42,7 +47,7 @@ class Cita extends Model
     //accessor devuelve un campo calculado
     //cita->hora_cita
 
-    public function getHorarioTimeAttribute(){
+    public function getHoraCitaTime12Attribute(){
         return (new Carbon($this->hora_cita))->format('g:i A');
     }
 

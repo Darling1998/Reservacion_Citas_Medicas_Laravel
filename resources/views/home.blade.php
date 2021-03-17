@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    Bienvenido al sistema de Admninistraciòn de ServiNatal
+                    Bienvenido al sistema de Administración de ServiNatal
                 </div>
             
         </div>

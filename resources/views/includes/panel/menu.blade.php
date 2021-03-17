@@ -104,7 +104,7 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/components/alerts.html" target="_blank">
+        <a class="nav-link" href="{{ url ('/reportes/especialidades/barras')}}" >
         <i class="ni ni-money-coins text-warning"></i>
         <span class="nav-link-text">Especialidades mas demandadas</span>
         </a>

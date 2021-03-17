@@ -36,19 +36,34 @@
                         </th>
 
                         <td>
- {{--                            
-                            <form action="{{url('/pacientes/'.$paciente->id)}}" method="POST">
-                                @csrf
-                                @method('DELETE')                            
-                                <a href="{{url('pacientes/'.$paciente->id.'/editar')}}" class="btn btn-sm btn-success">Editar</a>
-                            <button href="" class="btn btn-sm btn-danger" type="submit">Eliminar</button>
-                            </form> --}}
+
                         </td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
-       </div> 
+       </div>
+       
+      {{--  <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-end">
+          <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">
+              <i class="fa fa-angle-left"></i>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item active"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#">
+              <i class="fa fa-angle-right"></i>
+              <span class="sr-only">Next</span>
+            </a>
+          </li>
+        </ul>
+      </nav> --}}
+
     </div>
 
 @endsection
