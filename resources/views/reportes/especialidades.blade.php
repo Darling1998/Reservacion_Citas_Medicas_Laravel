@@ -46,7 +46,7 @@
 
 @endsection
 
- @section('scripts')
+{{--  @section('scripts')
     <script src="{{ asset('/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -115,8 +115,8 @@
 
     </script>
 @endsection 
-
-{{-- @section('scripts')
+ --}}
+ @section('scripts')
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
@@ -182,4 +182,4 @@
         });
 
     </script>
-@endsection --}}
+@endsection 

@@ -28,6 +28,6 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/citas',[App\Http\Controllers\Api\CitaController::class, 'store']);
 
 
-    Route::post('/fcm/token',[App\Http\Controllers\Api\FcmController::class, 'guardarToken']);
+    Route::post('/fcm/token',[App\Http\Controllers\Api\FcmController::class, 'postToken']);
 });
 
