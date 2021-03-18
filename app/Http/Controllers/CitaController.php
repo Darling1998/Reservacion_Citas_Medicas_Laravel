@@ -85,7 +85,13 @@ class CitaController extends Controller
         }
        
         $cita->estado='Cancelada';
-        $cita->save();
+
+        $guardado = $cita->save();
+
+        if ($guardado){
+         $cita->paciente->enviarFCM('Su cita ha sido cancelada');
+        }
+       
  
 
         $notificacion='La cita se ha cancelado correctamente';
@@ -97,8 +103,15 @@ class CitaController extends Controller
 
     
        $cita->estado='Confirmada';
-       $cita->save();
+       
+       $guardado = $cita->save();
 
+       if ($guardado){
+        $cita->paciente->enviarFCM('Su cita se ha confirmado');
+       }
+      
+
+       
 
        $notificacion='La cita se ha confirmado correctamente';
       // dd($cita,$request);

@@ -25,6 +25,9 @@ Route::middleware('auth:api')->group(function () {
 
     //informacion de usuario
     Route::get('/user',[App\Http\Controllers\Api\UserController::class,'mostrar']);
+    Route::post('/citas',[App\Http\Controllers\Api\CitaController::class, 'store']);
+
+
+    Route::post('/fcm/token',[App\Http\Controllers\Api\FcmController::class, 'guardarToken']);
 });
 
-Route::post('/citas',[App\Http\Controllers\Api\CitaController::class, 'store']);

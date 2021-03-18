@@ -106,4 +106,15 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Cita::class,'paciente_id');
     }
 
+
+    public function enviarFCM($mensaje){
+       return fcm()
+            ->to([$this->dispos_token])
+            ->priority('high')
+            ->timeToLive(0)
+            ->data([
+                'title' => 'ServiNatal',
+                'body' => $mensaje,
+            ])->send();
+    }
 }
