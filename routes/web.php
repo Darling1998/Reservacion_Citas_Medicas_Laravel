@@ -49,6 +49,9 @@ Route::middleware(['auth','admin'])->group(function () {
     //data de medicos en json 
     Route::get('/reportes/medicos/barras/infor',[App\Http\Controllers\Admin\ReporteController::class, 'medicosJson']);
 
+    //PDF
+    Route::get('/reportes/tabla/citas',[App\Http\Controllers\Admin\ReporteController::class, 'cuadroCitas']);
+    Route::get('/reportes/tabla/citas/pdf',[App\Http\Controllers\Admin\ReporteController::class, 'generarPdf']);
 
     //vista especialidades
     Route::get('/reportes/especialidades/barras',[App\Http\Controllers\Admin\ReporteController::class, 'especialidadesDemandadas']);

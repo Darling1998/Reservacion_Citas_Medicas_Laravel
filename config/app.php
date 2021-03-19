@@ -162,8 +162,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Kawankoding\Fcm\FcmServiceProvider::class,
-
-    
+        Barryvdh\DomPDF\ServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -234,6 +233,7 @@ return [
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
         'Fcm' => Kawankoding\Fcm\FcmFacade::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
     ],
 

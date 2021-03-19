@@ -109,6 +109,12 @@
         <span class="nav-link-text">Especialidades mas demandadas</span>
         </a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url ('/reportes/tabla/citas')}}" >
+        <i class="ni ni-money-coins text-warning"></i>
+        <span class="nav-link-text">Cuadro de Estados de Citas </span>
+        </a>
+    </li>
 </ul>
 
 @endif()

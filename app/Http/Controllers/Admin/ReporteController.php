@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
-
+use PDF;
 class ReporteController extends Controller
 {
     public function citas(){
@@ -111,5 +111,30 @@ class ReporteController extends Controller
         $data['series']=$series;
         return $data; //{categories:[],series:[]}
 
+    }
+
+
+    public function cuadroCitas()
+    {
+    //SELECT users.name as nombre, users.apellido as apellido, especialidads.nombre FROM especialidad_user 
+    //inner join users on users.id=especialidad_user.user_id 
+    //inner join especialidads on especialidads.id=especialidad_user.especialidad_id
+        $nomAp = DB::table('especialidad_user')
+            ->join('users', 'users.id', '=', 'especialidad_user.user_id')
+             ->join('especialidads', 'especialidads.id', '=', 'especialidad_user.especialidad_id')
+            ->select('users.name','users.apellido','especialidads.nombre')->orderBy('especialidads.nombre')
+            ->get();
+       // $nomAp = User::medicos()->get();
+        return view('reportes.cuadro',compact('nomAp'));
+    }
+
+    public function generarPdf(){
+        $nomAp = DB::table('especialidad_user')
+            ->join('users', 'users.id', '=', 'especialidad_user.user_id')
+             ->join('especialidads', 'especialidads.id', '=', 'especialidad_user.especialidad_id')
+            ->select('users.name','users.apellido','especialidads.nombre')->orderBy('especialidads.nombre')
+            ->get();
+            $pdf = PDF::loadView('reportes.cuadropdf', compact('nomAp'));
+            return $pdf->download('estados_de_citas_totales.pdf');
     }
 }
