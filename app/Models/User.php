@@ -85,7 +85,11 @@ class User extends Authenticatable implements JWTSubject
 
     //citas atendidas filtro
     public function citasAtendidas(){
-        return $this->citasPorDoctor()->where('estado','Atendida');
+        return $this->citasPorDoctor()->where([
+            ['estado', '=', 'Atendida'],
+            ['estado', '<>', 'Confirmada'],
+
+        ]);
     }
 
     //citas canceladas filtro

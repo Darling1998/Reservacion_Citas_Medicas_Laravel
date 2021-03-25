@@ -88,7 +88,7 @@ class ReporteController extends Controller
 
         $esp=Especialidad::select(['id', 'nombre'])->withCount(['citas'=>function($quer) use ($inicio,$fin){
 
-           // $users = DB::table('citas')->whereBetween('fecha_cita',[$inicio,$fin]);
+            $users = DB::table('citas')->whereBetween('fecha_cita',[$inicio,$fin]);
         }]
         )->orderBy('citas_count','desc')->get()->take(4)->toArray();
 
@@ -100,7 +100,7 @@ class ReporteController extends Controller
 
         $series=[];
         //citas atendidas
-        $series1['name']='Total Citas Atendidas por Especialidad';
+        $series1['name']='Total Citas por Especialidad';
         $series1['data'] = collect($esp)->pluck('citas_count');
         //citas canceladas
     
@@ -114,18 +114,34 @@ class ReporteController extends Controller
     }
 
 
+
+
     public function cuadroCitas()
     {
-    //SELECT users.name as nombre, users.apellido as apellido, especialidads.nombre FROM especialidad_user 
-    //inner join users on users.id=especialidad_user.user_id 
-    //inner join especialidads on especialidads.id=especialidad_user.especialidad_id
-        $nomAp = DB::table('especialidad_user')
-            ->join('users', 'users.id', '=', 'especialidad_user.user_id')
-             ->join('especialidads', 'especialidads.id', '=', 'especialidad_user.especialidad_id')
-            ->select('users.name','users.apellido','especialidads.nombre')->orderBy('especialidads.nombre')
-            ->get();
-       // $nomAp = User::medicos()->get();
-        return view('reportes.cuadro',compact('nomAp'));
+        $especialidades = Especialidad::all();
+        $actual=Carbon::now();
+        $inicio = Carbon::create(2020, 1, 1, 0, 0, 0)->format('Y-m-d');
+        $fin=$actual->format('Y-m-d');
+
+       return view('reportes.cuadro',compact('especialidades','inicio','fin'));
+    }
+
+    public function filtrar(Request $request){
+        $inicio=$request->input('inicio');
+        $fin=$request->input('fin');
+        $ides=$request->input('select');
+
+        $citas = DB::table('citas')
+        ->join('users', 'users.id', '=', 'citas.medico_id')
+        ->join('especialidad_user', 'especialidad_user.user_id', '=', 'users.id')
+        ->join('especialidads', 'especialidads.id', '=', 'citas.especialidad_id')
+        ->select('users.name','users.apellido','especialidads.nombre')->orderBy('especialidads.nombre')
+        ->where('citas.especialidad_id', '=',$ides)
+        ->whereBetween('fecha_cita',[$inicio,$fin])
+        ->get()->toArray(); 
+
+        return response(json_encode($citas)); 
+
     }
 
     public function generarPdf(){

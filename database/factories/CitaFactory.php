@@ -25,7 +25,7 @@ class CitaFactory extends Factory
         $medicosIds= User::medicos()->pluck('id');
         $pacientes= User::pacientes()->pluck('id');
 
-        $fecha=$this->faker->dateTimeBetween('-1 years','now');
+        $fecha=$this->faker->dateTimeBetween('2021-01-01','now');
         $fecha_cita= $fecha->format('Y-m-d');
         $hora_cita= $fecha->format('H:i:s');
 

@@ -10,7 +10,7 @@
             </div>
         </div>
 
-    {{--     <div class="card-body">
+         <div class="card-body">
             <div class="form-group">
                 <div class="input-daterange datepicker row align-items-center" data-date-format="yyyy-mm-dd">
                     <div class="col">
@@ -23,8 +23,8 @@
                                 >
                             </div>
                         </div>
-                    </div> --}}
-{{--                     <div class="col">
+                    </div> 
+                     <div class="col">
                         <div class="form-group">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -33,7 +33,7 @@
                                 <input id="dia_fin" class="form-control" placeholder="Fecha Fin" type="text" >
                             </div>
                         </div>
-                    </div> --}}
+                    </div> 
                 </div>
             </div>
 
@@ -46,7 +46,7 @@
 
 @endsection
 
-{{--  @section('scripts')
+ @section('scripts')
     <script src="{{ asset('/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -115,8 +115,8 @@
 
     </script>
 @endsection 
- --}}
- @section('scripts')
+
+ {{--  @section('scripts')
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
@@ -182,4 +182,4 @@
         });
 
     </script>
-@endsection 
+@endsection   --}}

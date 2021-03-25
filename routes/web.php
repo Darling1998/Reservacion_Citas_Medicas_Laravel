@@ -51,6 +51,7 @@ Route::middleware(['auth','admin'])->group(function () {
 
     //PDF
     Route::get('/reportes/tabla/citas',[App\Http\Controllers\Admin\ReporteController::class, 'cuadroCitas']);
+    Route::post('/reportes/tabla/citas/all',[App\Http\Controllers\Admin\ReporteController::class, 'filtrar']);
     Route::get('/reportes/tabla/citas/pdf',[App\Http\Controllers\Admin\ReporteController::class, 'generarPdf']);
 
     //vista especialidades

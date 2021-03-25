@@ -13,8 +13,6 @@
             <th scope="col">Nombres</th>
             <th scope="col">Apellidos</th>
             <th scope="col">Epecialidad</th>
-            <th scope="col">Citas Atendidas</th>
-            <th scope="col">Citas Canceladas</th>
             <th scope="col">Citas Totales</th>
         </tr>
         
@@ -37,13 +35,7 @@
             <td>
                 100
             </td>
-            <td>
-               150
-            </td>
-            <td>
-                250
-             </td>
-            
+         
         </tr>
         @endforeach
     </tbody>
