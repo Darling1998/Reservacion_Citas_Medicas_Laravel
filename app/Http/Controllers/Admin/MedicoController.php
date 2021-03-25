@@ -65,8 +65,8 @@ class MedicoController extends Controller
         );  
         
         $user->especialidades()->attach($request->input('especialidades'));
-        $notification = 'El médico se ha registrado correctamente.';
-        return redirect('/medicos')->with(compact('notification'));
+        $notificacion = 'El médico se ha registrado correctamente.';
+        return redirect('/medicos')->with(compact('notificacion'));
     }
 
     /**
@@ -135,8 +135,8 @@ class MedicoController extends Controller
         //accedemos a las especialidades del usuario sync para sincronizar las especialidades del value actual
         $user->especialidades()->sync($request->input('especialidades'));
 
-        $notification = 'La información del médico se ha actualizado correctamente.';
-        return redirect('/medicos')->with(compact('notification'));
+        $notificacion = 'La información del médico se ha actualizado correctamente.';
+        return redirect('/medicos')->with(compact('notificacion'));
     }
 
     /**
@@ -147,8 +147,10 @@ class MedicoController extends Controller
      */
     public function destroy(User $medico)
     {
+        $nombreMedico = $medico->name;
         $medico->delete();
 
-        return redirect('/medicos');
+        $notificacion = "El médico $nombreMedico se ha eliminado correctamente.";
+        return redirect('/medicos')->with(compact('notificacion'));
     }
 }

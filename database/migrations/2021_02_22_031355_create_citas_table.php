@@ -23,11 +23,11 @@ class CreateCitasTable extends Migration
 
              //medico
             $table->unsignedBigInteger('medico_id');
-            $table->foreign('medico_id')->references('id')->on('users');
+            $table->foreign('medico_id')->references('id')->on('users')->onDelete('cascade');
 
             //usuario
             $table->unsignedBigInteger('paciente_id');
-            $table->foreign('paciente_id')->references('id')->on('users');
+            $table->foreign('paciente_id')->references('id')->on('users')->onDelete('cascade');
          
 
             $table->unsignedBigInteger('especialidad_id');

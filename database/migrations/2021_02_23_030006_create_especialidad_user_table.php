@@ -18,7 +18,7 @@ class CreateEspecialidadUserTable extends Migration
 
             //medico
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             //especialidad
             $table->unsignedBigInteger('especialidad_id');

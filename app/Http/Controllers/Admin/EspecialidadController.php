@@ -40,7 +40,9 @@ class EspecialidadController extends Controller
         $especialidad->nombre = $request->input('nombre');
         $especialidad->descripcion = $request->input('descripcion');
         $especialidad->save();
-        return redirect('/especialidades');
+
+        $notificacion = 'La especialidad se ha registrado correctamente.';
+        return redirect('/especialidades')->with(compact('notificacion'));
     }
 
 
@@ -60,11 +62,16 @@ class EspecialidadController extends Controller
         $especialidad->nombre = $request->input('nombre');
         $especialidad->descripcion = $request->input('descripcion');
         $especialidad->save();
-        return redirect('/especialidades');
+
+        $notificacion = 'La especialidad se ha actualizado correctamente.';
+        return redirect('/especialidades')->with(compact('notificacion'));
     }
 
     public function eliminar(Especialidad $especialidad){
+        $especialidadNombre = $especialidad->name;
         $especialidad->delete();
-        return redirect('/especialidades');
+
+        $notificacion = 'La especialidad '. $especialidadNombre .' se ha eliminado correctamente.';
+        return redirect('/especialidades')->with(compact('notificacion')); 
     }
 }

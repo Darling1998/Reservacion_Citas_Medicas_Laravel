@@ -5,7 +5,7 @@
           <th scope="col">Especialidad</th>
           <th scope="col">Fecha</th>
           <th scope="col">Hora</th>
-             @if ($role == 2)
+             @if ($role == 1 || $role == 2)
             <th scope="col">Estado</th>
             @endif
             <th scope="col">Opciones</th>

@@ -8,7 +8,6 @@ Route::get('/especialidades',[App\Http\Controllers\Api\EspecialidadController::c
 Route::get('/especialidades/{especialidad}/medicos',[App\Http\Controllers\Api\EspecialidadController::class, 'medicos']);
 Route::get('/horarios/horas',[App\Http\Controllers\Api\HorarioController::class, 'horas']);
 
-
 /* Route::middleware('auth:api')->get('/user', function (Request $request) {
        
     return $request->user();

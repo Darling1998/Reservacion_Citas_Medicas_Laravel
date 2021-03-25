@@ -69,7 +69,7 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="" onclick="event.preventDefault(); document.getElementById('formLogout').
+        <a class="nav-link" href="{{ route('logout') }}"onclick="event.preventDefault(); document.getElementById('formLogout').
         submit();">
         <i class="ni ni-key-25"></i>
         <span class="nav-link-text">Cerrar sesión</span>

@@ -11,11 +11,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Contracts\Auth\Factory ;
 use JWTAuth;
+use Illuminate\Support\Facades\DB;
 class AuthController extends Controller
 {
 
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['login', 'registro']]);
+        $this->middleware('auth:api', ['except' => ['login', 'registro','validar']]);
     }
 
       public function login(Request $request){
@@ -25,7 +26,8 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            $mensaje=false;
+            return response()->json($mensaje);
         }
 
         if (! $token = auth('api')->attempt($validator->validated())) {
@@ -37,13 +39,14 @@ class AuthController extends Controller
     }
   
 
+
     public function registro(Request $request) {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|between:2,100',
-            'email' => 'required|string|email|max:100|unique:users',
+            'email' => 'required|string|email|max:100|unique:users,email',
             'password' => 'required|string|min:8',
             'apellido'=>'required|min:3',
-            'cedula'=>'nullable|digits:10|unique:users',
+            'cedula'=>'nullable|digits:10|unique:users,cedula',
             'telefono'=>'nullable|min:7',
             'direccion'=>'nullable|string'
         ]);
