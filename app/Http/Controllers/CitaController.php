@@ -18,7 +18,7 @@ class CitaController extends Controller
         if($role==1){
             $citasPendientes = Cita::where('estado','Reservada')->paginate(10);
             $citasConfirmadas = Cita::where('estado','Confirmada')->paginate(10);
-            $citasViejas= Cita::whereIn('estado',['Cancelada','Atendida'])->paginate(10);
+            $citasViejas= Cita::whereIn('estado',['Cancelada','Atendida'])->orderby('fecha_cita','DESC')->paginate(10);
         //consultas para el medico
         }else{
             $citasPendientes = Cita::where('estado','Reservada')->where('medico_id',auth()->id())->paginate(10);

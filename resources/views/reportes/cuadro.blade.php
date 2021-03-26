@@ -54,31 +54,6 @@
                         </div>
                     </div>
                 </div>
-
-{{--                 <div class="input-daterange datepicker row align-items-center">
-                    <div class="col">
-                        <label for="validationTooltip02"></label>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
-                                </div>
-                                <input name="dia_inicio" class="form-control" placeholder="Fecha Inicio" type="text" value="{{$inicio}}">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <label for="validationTooltip02"></label>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
-                                </div>
-                                <input name="dia_fin" class="form-control" placeholder="Fecha Fin" type="text" value="{{$fin}}">
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
                 </form>
             </div>
         </div>
@@ -146,7 +121,8 @@
                     for (var i=0; i<arreglo.length;i++){
                         var todo='<tr><th>'+arreglo[i].name+'</th>';
                             todo+='<th>'+arreglo[i].apellido+'</th>';
-                            todo+='<th>'+arreglo[i].nombre+'</th></tr>';
+                            todo+='<th>'+arreglo[i].nombre+'</th>';
+                            todo+='<th>'+arreglo[i].total+'</th></tr>';
                         $('#tablabody').append(todo);
                         //console.log(todo)
                     } 

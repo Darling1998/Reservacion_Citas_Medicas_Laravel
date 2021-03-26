@@ -19,21 +19,21 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                                 </div>
-                                <input id="dia_inicio" class="form-control" placeholder="Fecha Inicio" type="text" 
+                                <input id="dia_inicio" class="form-control" placeholder="Fecha Inicio" type="text" value="{{$inicio}}"
                                 >
                             </div>
                         </div>
-                    </div> 
-                     <div class="col">
+                    </div>
+                    <div class="col">
                         <div class="form-group">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                                 </div>
-                                <input id="dia_fin" class="form-control" placeholder="Fecha Fin" type="text" >
+                                <input id="dia_fin" class="form-control" placeholder="Fecha Fin" type="text" value="{{$fin}}">
                             </div>
                         </div>
-                    </div> 
+                    </div>
                 </div>
             </div>
 
@@ -88,29 +88,37 @@
         });
 
         function fetchData(){
-            fetch('/reportes/especialidades/barras/infor')
+        const inicioFecha = $inicio.val();
+        const finFecha = $fin.val();
+
+        // Fetch API
+        const url = `/reportes/especialidades/barras/infor?inicio=${inicioFecha}&fin=${finFecha}`;
+
+        fetch(url)
             .then(response => response.json())
             .then(data => {
             // console.log(data);
             report.xAxis[0].setCategories(data.categorias);
 
             if (report.series.length > 0) {
-                report.series[0].remove();            
-        
+               // report.series[1].remove();            
+                report.series[0].remove();
             }
             
             report.addSeries(data.series[0]); 
-           
+            report.addSeries(data.series[1]); 
             });
-
-            
-        }
+    }
 
         $(function () {
-      
-        fetchData();
+            $inicio = $('#dia_inicio');
+            $fin = $('#dia_fin');
 
-        });
+            fetchData();
+            
+            $inicio.change(fetchData);
+            $fin.change(fetchData);
+    });
 
 
     </script>

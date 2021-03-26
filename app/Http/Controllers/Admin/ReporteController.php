@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Carbon\Carbon;
+
 use Illuminate\Support\Collection;
 use PDF;
 class ReporteController extends Controller
@@ -53,7 +54,7 @@ class ReporteController extends Controller
             } 
         
         ])
-        ->orderBy('citas_atendidas_count','desc')->take(4)->get();
+        ->orderBy('citas_atendidas_count','desc')->take(5)->get();
 
         //dd($medicos);
 
@@ -76,44 +77,72 @@ class ReporteController extends Controller
 
 
     public function especialidadesDemandadas(){
-        return view('reportes.especialidades');
+        $actual=Carbon::now();
+        $inicio = $actual->subYear()->format('Y-m-d');
+        $fin=$actual->format('Y-m-d');
+      
+        return view('reportes.especialidades',compact('inicio','fin'));
     }
 
-    public function especialidadesDemandadasJson(Request $request){
+     public function especialidadesDemandadasJson(Request $request){
         $inicio=$request->input('inicio');
-        $fin=$request->input('fin');;
-   
-        //$esp=DB::table('especialidads')->select('id','nombre')->withCount('citas')->orderBy('citas_count','desc')->take(4)->get();
-         //$esp = Especialidad::withCount('citas')->orderBy('citas_count','desc')->get('citas_count')->take(3)->toArray();
+        $fin=$request->input('fin');
 
-        $esp=Especialidad::select(['id', 'nombre'])->withCount(['citas'=>function($quer) use ($inicio,$fin){
+/*   SELECT count(especialidad_id) as camtidxES, especialidads.nombre FROM citas 
+    inner join especialidads on citas.especialidad_id=especialidads.id 
+    group by(especialidad_id)  */
 
-            $users = DB::table('citas')->whereBetween('fecha_cita',[$inicio,$fin]);
-        }]
-        )->orderBy('citas_count','desc')->get()->take(4)->toArray();
 
-       // $esp=Especialidad::select('id', 'nombre')->withCount('citas')->orderBy('citas_count','desc')->take(4)->get()->toArray();
-        //dd($esp);
 
-        $data =[];
-        $data['categorias']=collect($esp)->pluck('nombre');
+    $citas = DB::table('citas')
+    ->join('especialidads', 'citas.especialidad_id', '=', 'especialidads.id')
+    ->select( array('especialidads.nombre',DB::raw('count(especialidad_id) as total')))
+    ->whereBetween('fecha_cita',[$inicio,$fin])
+    ->groupBy('especialidad_id','especialidads.nombre')
+    ->get(); 
 
-        $series=[];
-        //citas atendidas
-        $series1['name']='Total Citas por Especialidad';
-        $series1['data'] = collect($esp)->pluck('citas_count');
-        //citas canceladas
+    $data =[];
+    $data['categorias']=$citas->pluck('nombre');
+    $series=[];
+  
+    $series1['name']='Citas Atendidas';
+    $series1['data'] = $citas->pluck('total');
+    $series[] = $series1;
+    $data['series']=$series;
     
-        $series2['name'] = collect($esp)->pluck('nombre');
 
-        $series[] = $series1;
-        $series[] = $series2;
-        $data['series']=$series;
-        return $data; //{categories:[],series:[]}
-
+   return $data;
+   
     }
+ 
+/* public function especialidadesDemandadasJson(Request $request){
+    $inicio=$request->input('inicio');
+    $fin=$request->input('fin');
+
+    $esp=Especialidad::select(['id', 'nombre'])->withCount(['citas'=>function($quer) use ($inicio,$fin){
+        $quer->whereBetween('fecha_cita',[$inicio,$fin]);
+    }]
+    )->orderBy('citas_count','desc')->get()->take(4)->toArray();
 
 
+    $data =[];
+    $data['categorias']=collect($esp)->pluck('nombre');
+
+    $series=[];
+    //citas atendidas
+    $series1['name']='Total Citas por Especialidad';
+    $series1['data'] = collect($esp)->pluck('citas_count');
+    //citas canceladas
+
+    $series2['name'] = collect($esp)->pluck('nombre');
+
+    $series[] = $series1;
+    $series[] = $series2;
+    $data['series']=$series;
+    return $data; //{categories:[],series:[]}
+
+}
+ */
 
 
     public function cuadroCitas()
@@ -131,13 +160,21 @@ class ReporteController extends Controller
         $fin=$request->input('fin');
         $ides=$request->input('select');
 
+/*         select count(citas.especialidad_id),users.name,users.apellido, especialidads.nombre from citas ci 
+        inner join users u on users.id=citas.medico_id 
+        INNER JOIN especialidad_user on especialidad_user.user_id=users.id 
+        inner join especialidads esp on especialidads.id=citas.especialidad_id 
+        where especialidads.id=2 group by u.name */
+
         $citas = DB::table('citas')
         ->join('users', 'users.id', '=', 'citas.medico_id')
         ->join('especialidad_user', 'especialidad_user.user_id', '=', 'users.id')
         ->join('especialidads', 'especialidads.id', '=', 'citas.especialidad_id')
-        ->select('users.name','users.apellido','especialidads.nombre')->orderBy('especialidads.nombre')
-        ->where('citas.especialidad_id', '=',$ides)
+        ->select(array('', DB::raw('count(citas.especialidad_id) as total')))
+        ->where('especialidads.id', '=',$ides)
         ->whereBetween('fecha_cita',[$inicio,$fin])
+        ->groupBy('')
+        
         ->get()->toArray(); 
 
         return response(json_encode($citas)); 
@@ -148,7 +185,7 @@ class ReporteController extends Controller
         $nomAp = DB::table('especialidad_user')
             ->join('users', 'users.id', '=', 'especialidad_user.user_id')
              ->join('especialidads', 'especialidads.id', '=', 'especialidad_user.especialidad_id')
-            ->select('users.name','users.apellido','especialidads.nombre')->orderBy('especialidads.nombre')
+            ->select('')->orderBy('especialidads.nombre')
             ->get();
             $pdf = PDF::loadView('reportes.cuadropdf', compact('nomAp'));
             return $pdf->download('estados_de_citas_totales.pdf');

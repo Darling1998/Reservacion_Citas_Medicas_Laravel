@@ -27,16 +27,10 @@
             {{ $cita->estado }}
           </td>
           <td>
-           {{--  @if ($role_id == 1) --}}
               <a class="btn btn-sm btn-primary" title="Ver cita" 
                 href="{{ url('/citas/'.$cita->id) }}">
                   Ver
               </a>
-           {{--  @endif --}}
-{{--             <a class="btn btn-sm btn-danger" title="Cancelar cita" 
-              href="{{ url('/citas/'.$cita->id.'/cancel') }}">
-                Cancelar --}}
-           {{-- // </a> --}}
           </td>
         </tr>
         @endforeach 
@@ -44,6 +38,6 @@
     </table>
   </div>
   
-  <div class="card-body">
-    {{-- {{ $confirmedcitas->links() }} --}}
+  <div class="card-footer py-4">
+    {{ $citasViejas->links() }}
   </div>
