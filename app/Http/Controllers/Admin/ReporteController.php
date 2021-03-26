@@ -160,20 +160,20 @@ class ReporteController extends Controller
         $fin=$request->input('fin');
         $ides=$request->input('select');
 
-/*         select count(citas.especialidad_id),users.name,users.apellido, especialidads.nombre from citas ci 
-        inner join users u on users.id=citas.medico_id 
-        INNER JOIN especialidad_user on especialidad_user.user_id=users.id 
-        inner join especialidads esp on especialidads.id=citas.especialidad_id 
-        where especialidads.id=2 group by u.name */
+/*    select count(ci.especialidad_id),u.name,u.apellido, esp.nombre from citas ci 
+        inner join users u on u.id=ci.medico_id 
+        INNER JOIN especialidad_user espu on espu.user_id=u.id 
+        inner join especialidads esp on esp.id=ci.especialidad_id where esp.id=2 
+        group by u.name */
 
         $citas = DB::table('citas')
         ->join('users', 'users.id', '=', 'citas.medico_id')
         ->join('especialidad_user', 'especialidad_user.user_id', '=', 'users.id')
         ->join('especialidads', 'especialidads.id', '=', 'citas.especialidad_id')
-        ->select(array('', DB::raw('count(citas.especialidad_id) as total')))
+        ->select(array('users.name','users.apellido','especialidads.nombre', DB::raw('count(citas.especialidad_id) as total')))
         ->where('especialidads.id', '=',$ides)
         ->whereBetween('fecha_cita',[$inicio,$fin])
-        ->groupBy('')
+        ->groupBy('users.name','users.apellido','especialidads.nombre')
         
         ->get()->toArray(); 
 
