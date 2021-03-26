@@ -47,9 +47,9 @@ class MedicoController extends Controller
          $reglas=[
             'name'=>'required|min:3',
             'apellido'=>'required|min:3',
-            'cedula'=>'nullable|digits:10',
+            'cedula'=>'nullable|digits:10|unique:users,cedula',
             'telefono'=>'nullable|min:7',
-            'email'=>'required|email',
+            'email'=>'required|email|unique:users,email',
 
         ];
 
