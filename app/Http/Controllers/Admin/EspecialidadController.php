@@ -27,7 +27,7 @@ class EspecialidadController extends Controller
 
         //validaciones
         $reglas=[
-            'nombre'=>'required|min:4'
+            'nombre'=>'required|min:4|unique:especialidads,nombre'
         ];
 
         $alertas=[
